@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import Form from "../components/serviceProvider/Form";
 import List from "../components/serviceProvider/List";
 import { FormModal, FormModalType } from "@/src/config/general";
-import { useRouter } from "next/navigation";
-import { IServiceProvider } from "@/src/models/ServiceProvider";
+import { ServiceProvider } from "@/src/models/ServiceProvider";
 import { getProviderById } from "@/src/controller/serviceProvider";
 
 export default function () {
@@ -12,8 +11,7 @@ export default function () {
     type: FormModalType.isAdd,
     showForm: false,
   });
-  const router = useRouter()
-  const [editFormData,setEditFormData] = useState<IServiceProvider>()
+  const [editFormData,setEditFormData] = useState<ServiceProvider>()
 
   const handleOnEdit = async (id:string) => {
     const res = await getProviderById(id)
@@ -22,6 +20,7 @@ export default function () {
   }
 
   const handleOnCick =() => {
+    setEditFormData(undefined)
     if(formModal.showForm){
      setFormModal((prev)=>({...prev,showForm:false}))
     }else{

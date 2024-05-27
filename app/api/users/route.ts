@@ -2,9 +2,14 @@ import User from '@/src/models/User';
 import { connectDB } from '@/src/utils/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request:NextRequest) {
   await connectDB();
-  const users = await User.find({});
+  const type = request.nextUrl.searchParams.get("userType");
+  let options = {} 
+  if(type){
+    options = {userType:type}
+  }
+  const users = await User.find(options);
   return NextResponse.json({ success: true, data: users });
 }
 

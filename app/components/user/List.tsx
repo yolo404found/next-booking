@@ -1,11 +1,11 @@
 'use client'
 import { deleteUser, getUserList } from "@/src/controller/user";
-import { IUser } from "@/src/models/User";
+import { User } from "@/src/models/User";
 import React, { useEffect, useState } from "react";
 
 const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
 
-    const [list,setList] = useState<IUser[]>([])
+    const [list,setList] = useState<User[]>([])
 
     const getList = async () => {
         const res = await getUserList()

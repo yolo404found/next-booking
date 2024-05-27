@@ -1,12 +1,7 @@
 "use client";
 import { FormModalType } from "@/src/config/general";
-import {
-  createProvider,
-  updateProvider,
-} from "@/src/controller/serviceProvider";
-import { getUserList } from "@/src/controller/user";
-import { ServiceProvider } from "@/src/models/ServiceProvider";
-import { User } from "@/src/models/User";
+import { createLocation, updateLocation } from "@/src/controller/location";
+import { Location } from "@/src/models/Location";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 const Form = ({
@@ -15,11 +10,10 @@ const Form = ({
   onSubmit,
 }: {
   type: FormModalType;
-  editFormData?: ServiceProvider;
+  editFormData?: Location;
   onSubmit: () => void;
 }) => {
-  const [formData, setFormData] = useState<ServiceProvider>();
-  const [users, setUsers] = useState<User[]>();
+  const [formData, setFormData] = useState<Location>();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -41,121 +35,117 @@ const Form = ({
     e.preventDefault();
     if (formData) {
       if (type === FormModalType.isAdd) {
-        await createProvider(formData);
+        await createLocation(formData);
       } else {
-        await updateProvider(formData, editFormData?._id);
+        await updateLocation(formData, editFormData?._id);
       }
       onSubmit();
     }
   };
 
-  const getUsers = async () => {
-    const res = await getUserList({userType:'ServiceProvider'});
-    setUsers(res.data);
-  };
-
-
   useEffect(() => {
     setFormData(editFormData);
-    if(!users){
-      getUsers()
-    }
   }, [editFormData]);
 
   return (
     <section>
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          {type === FormModalType.isAdd ? "Add Provider" : "Edit Provider"}
+          {type === FormModalType.isAdd ? "Add Location" : "Edit Location"}
         </h2>
         <form onSubmit={handleOnSubmit} method="POST">
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <div className="w-full">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Provider Name
+                Location Name
               </label>
               <input
                 onChange={handleChange}
-                value={formData?.providerName ?? ""}
+                value={formData?.locationName ?? ""}
                 type="text"
-                name="providerName"
-                id="providerName"
+                name="locationName"
+                id="locationName"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Last Name"
+                placeholder="Location Name"
               />
             </div>
             <div className="w-full">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Email
+                Country
               </label>
               <input
                 onChange={handleChange}
-                value={formData?.email ?? ""}
-                type="email"
-                name="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="email"
-              />
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 my-3">
-          <div className="w-full">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Phone No
-              </label>
-              <input
+                value={formData?.country ?? ""}
                 type="text"
-                value={formData?.phone ?? ""}
-                onChange={handleChange}
-                name="phone"
-                id="phone"
+                name="country"
+                id="country"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Phone No"
+                placeholder="country"
               />
             </div>
             <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Service Provider
-            </label>
-            <select
-              onChange={handleChange}
-              value={typeof formData?.user === 'string' ? formData.user : formData?.user?._id ?? ''} 
-              id="user"
-              name="user"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            >
-              <option>Select Provider</option>
-              {users?.map((user, index) => {
-                return (
-                  <option key={index} value={user._id}>
-                    {user.firstName +  " " +user.lastName}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          </div>
-          
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                State
+              </label>
+              <input
+                onChange={handleChange}
+                value={formData?.state ?? ""}
+                type="text"
+                name="state"
+                id="state"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="State"
+              />
+            </div>
+            <div className="w-full">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                City
+              </label>
+              <input
+                onChange={handleChange}
+                value={formData?.city ?? ""}
+                type="text"
+                name="city"
+                id="city"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="city"
+              />
+            </div>
             <div className="w-full">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Address
               </label>
-              <textarea
+              <input
                 onChange={handleChange}
-                value={formData?.address ?? ''}
-                id="address"
+                value={formData?.address ?? ""}
+                type="text"
                 name="address"
-                rows={4}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Your address..."
-              ></textarea>
+                id="address"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Address"
+              />
             </div>
+            <div className="w-full">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Zip Code
+              </label>
+              <input
+                onChange={handleChange}
+                value={formData?.zipCode ?? ""}
+                type="text"
+                name="zipCode"
+                id="zipCode"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="zipCode"
+              />
+            </div>
+          </div>
+        
           <button
             type="submit"
             className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg border border-[#FFF]"
           >
-            {type === FormModalType.isAdd ? "Add Provider" : "Edit Provider"}
+            {type === FormModalType.isAdd ? "Add Location" : "Edit Location"}
           </button>
         </form>
       </div>

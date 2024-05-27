@@ -1,27 +1,25 @@
 "use client";
 import React, { useState } from "react";
-import Form from "../components/user/Form";
-import List from "../components/user/List";
 import { FormModal, FormModalType } from "@/src/config/general";
-import { User } from "@/src/models/User";
-import { getUserById } from "@/src/controller/user";
-import { useRouter } from "next/navigation";
+import Form from "../components/location/Form";
+import List from "../components/location/List";
+import { getLocationById } from "@/src/controller/location";
+import { Location } from "@/src/models/Location";
 
 export default function () {
   const [formModal, setFormModal] = useState<FormModal>({
     type: FormModalType.isAdd,
     showForm: false,
   });
-  const router = useRouter()
-  const [editFormData,setEditFormData] = useState<User>()
+  const [editFormData,setEditFormData] = useState<Location>()
 
   const handleOnEdit = async (id:string) => {
-    const res = await getUserById(id)
+    const res = await getLocationById(id)
     setEditFormData(res.data)
     setFormModal({ showForm: true, type: FormModalType.isEdit })
   }
 
-  const handleOnCick =() => {
+const handleOnCick =() => {
     setEditFormData(undefined)
     if(formModal.showForm){
      setFormModal((prev)=>({...prev,showForm:false}))
@@ -42,7 +40,7 @@ export default function () {
           onClick={handleOnCick}
           className="bg-blue-500 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-full mb-4"
         >
-          {formModal.showForm ? 'Back' : 'Add a user' }
+          {formModal.showForm ? 'Back' : 'Add Location' }
         </button>
       </div>
       {formModal.showForm ? <Form onSubmit={handleOnSubmit} {...formModal} editFormData={editFormData}/> : <List onEdit={handleOnEdit} />}

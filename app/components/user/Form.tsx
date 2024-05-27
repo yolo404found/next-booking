@@ -1,12 +1,12 @@
 'use client'
 import { FormModalType } from '@/src/config/general'
 import { createUser, updateUser } from '@/src/controller/user'
-import { IUser } from '@/src/models/User'
+import { User } from '@/src/models/User'
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
-const Form = ({type,editFormData,onSubmit}:{type:FormModalType,editFormData?:IUser,onSubmit:()=>void}) => {
+const Form = ({type,editFormData,onSubmit}:{type:FormModalType,editFormData?:User,onSubmit:()=>void}) => {
 
-    const [formData,setFormData] = useState<IUser>()
+    const [formData,setFormData] = useState<User>()
 
     const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;

@@ -1,19 +1,19 @@
 'use client'
-import { deleteService, getServiceList } from "@/src/controller/service";
-import { Service } from "@/src/models/Service";
+import { deleteLocation, getLocationList } from "@/src/controller/location";
+import { Location } from "@/src/models/Location";
 import React, { useEffect, useState } from "react";
 
 const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
 
-    const [list,setList] = useState<Service[]>([])
+    const [list,setList] = useState<Location[]>([])
 
     const getItemList = async () => {
-        const res = await getServiceList()
+        const res = await getLocationList()
         setList(res.data)
     }
 
     const handleOnDelete = async (id:string) => {
-      const res = await deleteService(id)
+      const res = await deleteLocation(id)
       if(res.success){
           getItemList()
       }
@@ -31,13 +31,19 @@ const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
                     Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Description
+                    Country
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Pricee
+                    State
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Service Provider
+                    City
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Address
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    ZipCode
                 </th>
                 <th scope="col" className="px-6 py-3">
                     Action
@@ -49,16 +55,22 @@ const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
               list.length > 0 &&  list.map((item,index)=>{
                     return  <tr key={'user'+index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {item.serviceName}
+                    {item.locationName}
                     </th>
                     <td className="px-6 py-4">
-                    {item.description}
+                    {item.country}
                     </td>
                     <td className="px-6 py-4">
-                    {item.price}
+                    {item.state}
                     </td>
                     <td className="px-6 py-4">
-                    {item.serviceProvider.providerName}
+                    {item.city}
+                    </td>
+                    <td className="px-6 py-4">
+                    {item.address}
+                    </td>
+                    <td className="px-6 py-4">
+                    {item.zipCode}
                     </td>
                     <td className="px-6 py-4">
                         <a href="#" onClick={()=>onEdit(item._id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">Edit</a>

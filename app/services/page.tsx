@@ -1,27 +1,26 @@
 "use client";
 import React, { useState } from "react";
 import { FormModal, FormModalType } from "@/src/config/general";
-import { useRouter } from "next/navigation";
-import { getProviderById } from "@/src/controller/serviceProvider";
-import { IService } from "@/src/models/Service";
+import { Service } from "@/src/models/Service";
 import Form from "../components/service/Form";
 import List from "../components/service/List";
+import { getServiceById } from "@/src/controller/service";
 
 export default function () {
   const [formModal, setFormModal] = useState<FormModal>({
     type: FormModalType.isAdd,
     showForm: false,
   });
-  const router = useRouter()
-  const [editFormData,setEditFormData] = useState<IService>()
+  const [editFormData,setEditFormData] = useState<Service>()
 
   const handleOnEdit = async (id:string) => {
-    const res = await getProviderById(id)
+    const res = await getServiceById(id)
     setEditFormData(res.data)
     setFormModal({ showForm: true, type: FormModalType.isEdit })
   }
 
-  const handleOnCick =() => {
+const handleOnCick =() => {
+    setEditFormData(undefined)
     if(formModal.showForm){
      setFormModal((prev)=>({...prev,showForm:false}))
     }else{

@@ -1,11 +1,11 @@
 'use client'
 import { deleteProvider, getProviderList } from "@/src/controller/serviceProvider";
-import { IServiceProvider } from "@/src/models/ServiceProvider";
+import { ServiceProvider } from "@/src/models/ServiceProvider";
 import React, { useEffect, useState } from "react";
 
 const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
 
-    const [list,setList] = useState<IServiceProvider[]>([])
+    const [list,setList] = useState<ServiceProvider[]>([])
 
     const getList = async () => {
         const res = await getProviderList()
@@ -34,6 +34,9 @@ const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
                     Email
                 </th>
                 <th scope="col" className="px-6 py-3">
+                    User
+                </th>
+                <th scope="col" className="px-6 py-3">
                     Phone Number
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -53,6 +56,9 @@ const List = ({onEdit}:{onEdit:(id:string)=>void}) => {
                     </th>
                     <td className="px-6 py-4">
                     {provider.email}
+                    </td>
+                    <td className="px-6 py-4">
+                    {typeof provider.user != "string" ? provider.user?.firstName + provider.user.lastName : ''}
                     </td>
                     <td className="px-6 py-4">
                     {provider.phone}

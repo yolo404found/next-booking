@@ -1,10 +1,15 @@
 import { Schema, model, models, Document } from 'mongoose';
+import { ServiceProvider } from './ServiceProvider';
 
-export interface IService extends Document {
+interface IService extends Document {
   serviceName: string;
   description?: string;
   price: number;
   serviceProvider: Schema.Types.ObjectId;
+}
+
+export interface Service extends Omit<IService,'serviceProvider'>{
+  serviceProvider:ServiceProvider | string
 }
 
 const serviceSchema = new Schema<IService>({
