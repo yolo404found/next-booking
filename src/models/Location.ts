@@ -20,5 +20,5 @@ const locationSchema = new Schema<ILocation>({
   country: { type: String, required: true }
 });
 
-const Location = models.Location || model<ILocation>('Location', locationSchema);
+const Location = models?.Location || model<ILocation>('Location', locationSchema);
 export default Location;

@@ -16,5 +16,5 @@ const paymentSchema = new Schema<IPayment>({
   status: { type: String, enum: ['Paid', 'Pending', 'Failed'], required: true }
 });
 
-const Payment = models.Payment || model<IPayment>('Payment', paymentSchema);
+const Payment = models?.Payment || model<IPayment>('Payment', paymentSchema);
 export default Payment;

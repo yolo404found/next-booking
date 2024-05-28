@@ -20,5 +20,5 @@ const userSchema = new Schema<IUser>({
   userType: { type: String, enum: ['Customer', 'Admin', 'ServiceProvider'], required: true }
 });
 
-const User = models.User || model<IUser>('User', userSchema);
+const User = models?.User || model<IUser>('User', userSchema);
 export default User;

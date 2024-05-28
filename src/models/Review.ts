@@ -1,4 +1,6 @@
 import { Schema, model, models, Document } from 'mongoose';
+import { Service } from './Service';
+import { User } from './User';
 
 interface IReview extends Document {
   user: Schema.Types.ObjectId;
@@ -6,6 +8,11 @@ interface IReview extends Document {
   rating: number;
   comment?: string;
   reviewDate: Date;
+}
+
+export interface Review extends Omit<IReview,"user"|"service">{
+  user:User | string,
+  service:Service | string
 }
 
 const reviewSchema = new Schema<IReview>({
@@ -16,5 +23,5 @@ const reviewSchema = new Schema<IReview>({
   reviewDate: { type: Date, default: Date.now }
 });
 
-const Review = models.Review || model<IReview>('Review', reviewSchema);
+const Review = models?.Review || model<IReview>('Review', reviewSchema);
 export default Review;

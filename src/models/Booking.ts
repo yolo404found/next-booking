@@ -20,5 +20,5 @@ const bookingSchema = new Schema<IBooking>({
   totalPrice: { type: Number, required: true }
 });
 
-const Booking = models.Booking || model<IBooking>('Booking', bookingSchema);
+const Booking = models?.Booking || model<IBooking>('Booking', bookingSchema);
 export default Booking;

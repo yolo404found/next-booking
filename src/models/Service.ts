@@ -19,5 +19,5 @@ const serviceSchema = new Schema<IService>({
   serviceProvider: { type: Schema.Types.ObjectId, ref: 'ServiceProvider', required: true }
 });
 
-const Service = models.Service || model<IService>('Service', serviceSchema);
+const Service = models?.Service || model<IService>('Service', serviceSchema);
 export default Service;

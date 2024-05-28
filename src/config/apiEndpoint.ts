@@ -3,5 +3,6 @@ export const API = {
     USER : '/users',
     SERVICE_PROVIDER : '/service-providers',
     SERVICE:'/services',
-    LOCATION:'/locations'
+    LOCATION:'/locations',
+    REVIEW:'/reviews'
 }

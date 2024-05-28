@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   await connectDB();
-  const reviews = await Review.find({});
+  const reviews = await Review.find({}).populate('user').populate('service').lean();
   return NextResponse.json({ success: true, data: reviews });
 }
 

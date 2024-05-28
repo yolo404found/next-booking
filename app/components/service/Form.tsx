@@ -3,7 +3,7 @@ import { FormModalType } from "@/src/config/general";
 import { createService, updateService } from "@/src/controller/service";
 import { getProviderList } from "@/src/controller/serviceProvider";
 import { Service } from "@/src/models/Service";
-import { IServiceProvider } from "@/src/models/ServiceProvider";
+import { ServiceProvider } from "@/src/models/ServiceProvider";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 const Form = ({
@@ -16,7 +16,7 @@ const Form = ({
   onSubmit: () => void;
 }) => {
   const [formData, setFormData] = useState<Service>();
-  const [providers, setProviders] = useState<IServiceProvider[]>();
+  const [providers, setProviders] = useState<ServiceProvider[]>();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

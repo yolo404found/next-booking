@@ -21,5 +21,5 @@ export interface ServiceProvider extends Omit<IServiceProvider,"user">{
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
-const ServiceProvider = models.ServiceProvider || model<IServiceProvider>('ServiceProvider', serviceProviderSchema);
+const ServiceProvider = models?.ServiceProvider || model<IServiceProvider>('ServiceProvider', serviceProviderSchema);
 export default ServiceProvider;
