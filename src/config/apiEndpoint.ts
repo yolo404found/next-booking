@@ -4,5 +4,7 @@ export const API = {
     SERVICE_PROVIDER : '/service-providers',
     SERVICE:'/services',
     LOCATION:'/locations',
-    REVIEW:'/reviews'
+    REVIEW:'/reviews',
+    BOOKING:'/bookings',
+    PAYMENT:'/payments'
 }

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   await connectDB();
-  const bookings = await Booking.find({}).populate('user');
+  const bookings = await Booking.find({}).populate('user').populate('service').lean();
   return NextResponse.json({ success: true, data: bookings });
 }
 

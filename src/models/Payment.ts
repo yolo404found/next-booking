@@ -1,4 +1,5 @@
 import { Schema, model, models, Document } from 'mongoose';
+import { Booking } from './Booking';
 
 interface IPayment extends Document {
   booking: Schema.Types.ObjectId;
@@ -6,6 +7,10 @@ interface IPayment extends Document {
   amount: number;
   paymentMethod: 'Credit Card' | 'PayPal';
   status: 'Paid' | 'Pending' | 'Failed';
+}
+
+export interface Payment extends Omit<IPayment,"booking">{
+  booking:Booking | string
 }
 
 const paymentSchema = new Schema<IPayment>({
